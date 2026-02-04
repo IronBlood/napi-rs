@@ -429,16 +429,14 @@ jobs:
         working-directory: napi-rs
         run: |
           yarn workspace @examples/napi build
+          yarn workspace @examples/compat-mode build
 
       - name: Run tests
         shell: msys2 {0}
         working-directory: napi-rs
         run: |
           yarn test:cli
-          # NOTE: skip `yarn workspace @examples/compat-mode test`, binary
-          # can be built but cannot be loaded
-          yarn workspace @examples/napi test
-          yarn workspace @napi-rs/wasm-runtime test
+          yarn test
           yarn workspace @examples/napi test:leak
           yarn tsc -p examples/napi/tsconfig.json --noEmit --skipLibCheck
           yarn test:macro
